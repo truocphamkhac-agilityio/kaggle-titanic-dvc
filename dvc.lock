@@ -193,11 +193,11 @@ stages:
         train_test_split.target_class: Survived
     outs:
     - path: models/estimator.pkl
-      md5: ef34445e0498248f60e9ac3e78093ebe
-      size: 31660314
+      md5: a97b560743390021fc662ba0496e6237
+      size: 31660351
     - path: results/metrics.json
-      md5: b836f34107676456da5aded50162522f
-      size: 316
+      md5: cb8cea4310392e6b6e6f4f18fde06712
+      size: 318
   predict_output:
     cmd: python3 src/models/predict.py -te data/processed/test_processed.csv -rd results/
       -md models/
@@ -206,8 +206,8 @@ stages:
       md5: 0cb34fc53024fa12b32a098a32870612
       size: 59004
     - path: models/estimator.pkl
-      md5: ef34445e0498248f60e9ac3e78093ebe
-      size: 31660314
+      md5: a97b560743390021fc662ba0496e6237
+      size: 31660351
     - path: src/models/metrics.py
       md5: 69f52aa7384511f15c07d1504b368643
       size: 2056
@@ -224,5 +224,5 @@ stages:
       md5: 76577b506c3bc22a50d1aa61f3b940d0
       size: 2839
     - path: results/test_predict_proba.csv
-      md5: 00fb6f7226fc5db2885502f3f44d2bb9
-      size: 10089
+      md5: 84ac915213a1b4f510486a0d049f39df
+      size: 10087
