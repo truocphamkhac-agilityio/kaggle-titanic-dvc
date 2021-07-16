@@ -3,7 +3,37 @@ drop_cols:
 - Name
 - Cabin
 - Ticket
+- Sex
 - Age
+- Fare
+- Embarked
+- Pclass Sex
+- Pclass Age
+- Pclass SibSp
+- Pclass Parch
+- Pclass Fare
+- Pclass Embarked
+- Sex Age
+- Sex SibSp
+- Sex Parch
+- Sex Fare
+- Sex Embarked
+- Age SibSp
+- Age Parch
+- Age Fare
+- Age Embarked
+- SibSp Parch
+- SibSp Fare
+- SibSp Embarked
+- Parch Fare
+- Parch Embarked
+- Fare Embarked
+- family_size
+- is_vip
+- parent
+- is_orphan
+- is_single_adult_mother
+- is_single_adult_male
 dtypes:
   Age: float
   Embarked: category
