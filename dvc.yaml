@@ -1,0 +1,116 @@
+stages:
+  make_dataset:
+    desc: Download data from Kaggle, create data dictionary and summary dtable
+    cmd: python3 src/data/make_dataset.py -c titanic -tr train.csv -te test.csv -o
+      ./data/raw
+    deps:
+    - src/data/make_dataset.py
+    params:
+    - dtypes
+    outs:
+    - data/raw/test.csv
+    - data/raw/train.csv
+    - reports/figures/data_dictionary.tex
+    - reports/figures/table_one.tex
+  encode_labels:
+    desc: Convert categorical labels to integer values and save mapping
+    cmd: python3 src/data/encode_labels.py -tr data/raw/train.csv -te data/raw/test.csv
+      -o data/interim
+    deps:
+    - data/raw/test.csv
+    - data/raw/train.csv
+    - src/data/encode_labels.py
+    params:
+    - dtypes
+    outs:
+    - data/interim/label_encoding.yaml
+    - data/interim/test_categorized.csv
+    - data/interim/train_categorized.csv
+  impute_nan:
+    desc: Replace missing values for age with mean values from training dataset.
+    cmd: python3 src/data/replace_nan.py -tr data/interim/train_categorized.csv -te
+      data/interim/test_categorized.csv -o data/interim
+    deps:
+    - data/interim/test_categorized.csv
+    - data/interim/train_categorized.csv
+    - src/data/replace_nan.py
+    params:
+    - imputation
+    outs:
+    - data/interim/test_nan_imputed.csv
+    - data/interim/train_nan_imputed.csv
+  build_features:
+    desc: Optional feature engineering and dimensionality reduction
+    cmd: python3 src/features/build_features.py -tr data/interim/train_nan_imputed.csv
+      -te data/interim/test_nan_imputed.csv -o data/interim/
+    deps:
+    - data/interim/test_nan_imputed.csv
+    - data/interim/train_nan_imputed.csv
+    - src/features/build_features.py
+    params:
+    - feature_eng
+    - random_seed
+    outs:
+    - data/interim/test_featurized.csv
+    - data/interim/train_featurized.csv
+  normalize_data:
+    desc: Optionally normalize features by fitting transforms on the training dataset.
+    cmd: python3 src/features/normalize.py -tr data/interim/train_featurized.csv -te
+      data/interim/test_featurized.csv -o data/processed/
+    deps:
+    - data/interim/test_featurized.csv
+    - data/interim/train_featurized.csv
+    - src/features/normalize.py
+    params:
+    - normalize
+    outs:
+    - data/processed/test_processed.csv
+    - data/processed/train_processed.csv
+  split_train_dev:
+    desc: Split training data into the train and dev sets using stratified K-fold
+      cross validation.
+    cmd: python3 src/data/split_train_dev.py -tr data/processed/train_processed.csv
+      -o data/processed/
+    deps:
+    - data/processed/train_processed.csv
+    - src/data/split_train_dev.py
+    params:
+    - random_seed
+    - train_test_split
+    outs:
+    - data/processed/split_train_dev.csv
+  train_model:
+    desc: Train the specified classifier using the pre-allocated stratified K-fold
+      cross validation splits and the current params.yaml settings. Track metrics
+      with Git
+    cmd: python3 src/models/train_model.py -tr data/processed/train_processed.csv
+      -cv data/processed/split_train_dev.csv
+    deps:
+    - data/processed/split_train_dev.csv
+    - data/processed/train_processed.csv
+    - src/models/train_model.py
+    params:
+    - classifier
+    - model_params
+    - random_seed
+    - train_test_split.target_class
+    outs:
+    - models/estimator.pkl
+    metrics:
+    - results/metrics.json:
+        cache: false
+  predict_output:
+    desc: Predict output on held-out test set for submission to Kaggle.
+    cmd: python3 src/models/predict.py -te data/processed/test_processed.csv -rd results/
+      -md models/
+    deps:
+    - data/processed/test_processed.csv
+    - models/estimator.pkl
+    - src/models/metrics.py
+    - src/models/predict.py
+    params:
+    - predict
+    - train_test_split.target_class
+    outs:
+    - results/test_predict_binary.csv
+    - results/test_predict_proba.csv

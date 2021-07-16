@@ -1,0 +1,55 @@
+classifier: random_forest
+drop_cols:
+- Name
+- Cabin
+- Ticket
+dtypes:
+  Age: float
+  Embarked: category
+  Fare: float
+  Parch: int
+  Pclass: category
+  Sex: category
+  SibSp: int
+  Survived: category
+feature_eng:
+  featurize: true
+imputation:
+  Age: 29.6991
+  Fare: 32.2042
+  method: mean
+model_params:
+  logistic_regression: null
+  naive_bayes: null
+  neural_network: null
+  random_forest:
+    criterion: gini
+    max_depth: 15
+    max_features: auto
+    min_samples_leaf: 6
+    min_samples_split: 9
+    n_estimators: 460
+  support_vector_machine: null
+  xgboost: null
+normalize: null
+param_tuning:
+  logistic_regression: null
+  naive_bayes: null
+  neural_network: null
+  num_eval: 100
+  random_forest:
+    criterion: gini
+    max_depth: 15
+    max_features: auto
+    min_samples_leaf: 6
+    min_samples_split: 9
+    n_estimators: 460
+  scoring: accuracy
+  support_vector_machine: null
+predict:
+  js_estimator: true
+random_seed: 12345
+train_test_split:
+  n_split: 10
+  shuffle: true
+  target_class: Survived
