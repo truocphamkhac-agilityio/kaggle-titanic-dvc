@@ -80,3 +80,10 @@ dvc status
 # Expected output
 #   Data and pipelines are up to date.
 ```
+
+## Pipeline
+
+```bash
+# Reproduce model pipeline
+dvc repro
+```

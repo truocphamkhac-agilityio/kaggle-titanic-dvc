@@ -1,12 +1,3 @@
-#   -*- coding: utf-8 -*-
-#  Copyright (c) 2021.  Jeffrey J. Nirschl. All rights reserved.
-#
-#   Licensed under the MIT license. See the LICENSE.md file in the project
-#   root directory for full license information.
-#
-#   Time-stamp: <>
-#   ======================================================================
-
 import numpy as np
 import pandas as pd
 from sklearn.metrics import precision_score, recall_score
