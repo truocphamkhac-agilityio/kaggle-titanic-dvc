@@ -73,8 +73,8 @@ stages:
       md5: 5d06666c95fed743140b44190fb67c77
       size: 23884
     - path: src/data/replace_nan.py
-      md5: e1a2e28ebedd2c3c05d60e2d556d8970
-      size: 2486
+      md5: a292443ade2893463ea8e78a2b2cb7fe
+      size: 3527
     params:
       params.yaml:
         imputation:
