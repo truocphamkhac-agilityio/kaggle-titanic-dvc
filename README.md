@@ -87,3 +87,7 @@ dvc status
 # Reproduce model pipeline
 dvc repro
 ```
+
+## DVC Studio View
+
+Explore the ML experiments: https://studio.iterative.ai/user/truocpham-agilityio/views/kaggle-titanic-dvc-qhscvyp2k1
