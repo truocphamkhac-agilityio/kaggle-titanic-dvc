@@ -17,11 +17,11 @@ feature_eng:
 imputation:
   Age: 29.6991
   Fare: 32.2042
-  method: mean
+  method: median
 model_params:
-  logistic_regression: null
-  naive_bayes: null
-  neural_network: null
+  logistic_regression:
+  naive_bayes:
+  neural_network:
   random_forest:
     criterion: gini
     max_depth: 15
@@ -29,13 +29,13 @@ model_params:
     min_samples_leaf: 6
     min_samples_split: 9
     n_estimators: 460
-  support_vector_machine: null
-  xgboost: null
-normalize: null
+  support_vector_machine:
+  xgboost:
+normalize:
 param_tuning:
-  logistic_regression: null
-  naive_bayes: null
-  neural_network: null
+  logistic_regression:
+  naive_bayes:
+  neural_network:
   num_eval: 100
   random_forest:
     criterion: gini
@@ -45,7 +45,7 @@ param_tuning:
     min_samples_split: 9
     n_estimators: 460
   scoring: accuracy
-  support_vector_machine: null
+  support_vector_machine:
 predict:
   js_estimator: true
 random_seed: 12345
