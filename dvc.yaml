@@ -23,7 +23,6 @@ stages:
     params:
     - dtypes
     outs:
-    - data/interim/label_encoding.yaml
     - data/interim/test_categorized.csv
     - data/interim/train_categorized.csv
   impute_nan:

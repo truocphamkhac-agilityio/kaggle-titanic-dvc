@@ -5,8 +5,8 @@ stages:
       ./data/raw
     deps:
     - path: src/data/make_dataset.py
-      md5: 6003407559d33e14c4122af507648dfd
-      size: 2280
+      md5: 4f66b01ce7fbc7219ddd5479027b4fce
+      size: 1966
     params:
       params.yaml:
         dtypes:
@@ -42,8 +42,8 @@ stages:
       md5: 61fdd54abdbf6a85b778e937122e1194
       size: 61194
     - path: src/data/encode_labels.py
-      md5: 94202f6ff677094ae0bf8b98575baf50
-      size: 3623
+      md5: 71c20e2dd8094132c4ca78915c4af31c
+      size: 3311
     params:
       params.yaml:
         dtypes:
@@ -56,9 +56,6 @@ stages:
           SibSp: int
           Survived: category
     outs:
-    - path: data/interim/label_encoding.yaml
-      md5: 8e736d94ad872a9a10f2321653990609
-      size: 115
     - path: data/interim/test_categorized.csv
       md5: f0fcdcd7bb08c23d382a665ac1436034
       size: 10788
@@ -76,8 +73,8 @@ stages:
       md5: 5d06666c95fed743140b44190fb67c77
       size: 23884
     - path: src/data/replace_nan.py
-      md5: 76582379c528d402d408982409bd9820
-      size: 2800
+      md5: e1a2e28ebedd2c3c05d60e2d556d8970
+      size: 2486
     params:
       params.yaml:
         imputation:
@@ -102,8 +99,8 @@ stages:
       md5: 9edd0421f46d2f0786ea6d82fdcf4e12
       size: 24592
     - path: src/features/build_features.py
-      md5: 2e6e7d169d77cb1e990fbb37c4f147bd
-      size: 5030
+      md5: 15a0db18893a1dea5b5c425bbc04e2fb
+      size: 4716
     params:
       params.yaml:
         feature_eng:
@@ -127,8 +124,8 @@ stages:
       md5: 980d370c7991c5b991bf8c47d13beb02
       size: 127169
     - path: src/features/normalize.py
-      md5: 1e67fe2375c91a702144569d41a9f9c1
-      size: 1924
+      md5: 06e7d4f840c84d24a8892496db8f3e19
+      size: 1610
     params:
       params.yaml:
         normalize:
@@ -147,8 +144,8 @@ stages:
       md5: 55fc818f9babfe04c7bd9a605e0f6240
       size: 126326
     - path: src/data/split_train_dev.py
-      md5: 18368dc893cc1b306e39f62f6d460861
-      size: 2966
+      md5: 3ccd2f141aa14c9a0ea84e4fa6f461ca
+      size: 2652
     params:
       params.yaml:
         random_seed: 12345
@@ -171,8 +168,8 @@ stages:
       md5: 55fc818f9babfe04c7bd9a605e0f6240
       size: 126326
     - path: src/models/train_model.py
-      md5: 393a733bef3fbe5b26772193d9450585
-      size: 4424
+      md5: 3edee7d3e727ce6d3587557a3924eca3
+      size: 4110
     params:
       params.yaml:
         classifier: random_forest
@@ -196,7 +193,7 @@ stages:
       md5: a97b560743390021fc662ba0496e6237
       size: 31660351
     - path: results/metrics.json
-      md5: cb8cea4310392e6b6e6f4f18fde06712
+      md5: 9906a600b727281c8328e39c508bf68e
       size: 318
   predict_output:
     cmd: python3 src/models/predict.py -te data/processed/test_processed.csv -rd results/
@@ -209,11 +206,11 @@ stages:
       md5: a97b560743390021fc662ba0496e6237
       size: 31660351
     - path: src/models/metrics.py
-      md5: 69f52aa7384511f15c07d1504b368643
-      size: 2056
+      md5: 71807a31d25c031180a695981df6fe9c
+      size: 1742
     - path: src/models/predict.py
-      md5: 3ba9b367a92a19518c0d7fa28426f7a1
-      size: 3268
+      md5: ffcea00661810b8f82c86a6c39309253
+      size: 2954
     params:
       params.yaml:
         predict:

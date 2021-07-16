@@ -25,22 +25,23 @@ def load_params(filepath="params.yaml") -> dict:
 
 def convert_none_to_null(params):
     """Convert None values in params.yaml into null to ensure
-    correct reading/writing as None type"""
+    correct reading/writing as None type
+    """
+
     if isinstance(params, list):
         params[:] = [convert_none_to_null(elem) for elem in params]
     elif isinstance(params, dict):
         for k, v in params.items():
             params[k] = convert_none_to_null(v)
+
+    # convert None values to null
     return 'null' if params is None else params
 
 
 def save_params(params):
-    """"""
-    # convert None values to null
-
-    # save params
     new_params = yaml.safe_dump(params)
 
+    # save params
     with open("params.yaml", 'w') as writer:
         writer.write(new_params)
 
@@ -68,7 +69,7 @@ def load_data(data_path,
 
     # loop over filepath in list and read file
     output_df = [pd.read_csv(elem, sep=sep, header=header,
-                                     index_col=index_col) for elem in data_path]
+                             index_col=index_col) for elem in data_path]
     # if single file as input, return single df not a list
     if len(output_df) == 1:
         output_df = output_df[0]

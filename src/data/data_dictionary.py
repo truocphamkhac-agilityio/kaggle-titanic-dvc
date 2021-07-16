@@ -8,27 +8,24 @@ import pandas as pd
 import yaml
 from tableone import TableOne
 
-from src.data import load_data, load_params
+from src.data import load_params
 
 
-def create(data_path, report_dir="./reports/figures",
-           output_file="data_dictionary.tex"):
+def create(data_path, report_dir="./reports/figures", output_file="data_dictionary.tex"):
     """Create a data dictionary"""
     assert (os.path.isfile(data_path)), FileNotFoundError
     assert (os.path.isdir(report_dir)), NotADirectoryError
     report_dir = Path(report_dir).resolve()
 
     # read files - do not specify index column
-    df = pd.read_csv(data_path, sep=",", header=0,
-                     na_values=["nan"])
+    df = pd.read_csv(data_path, sep=",", header=0, na_values=["nan"])
 
     # load params
     params = load_params()
 
     # update params for column data types
     param_dtypes = params["dtypes"]
-    param_dtypes["Pclass"] = pd.api.types.CategoricalDtype(categories=[1, 2, 3],
-                                                           ordered=True)
+    param_dtypes["Pclass"] = pd.api.types.CategoricalDtype(categories=[1, 2, 3], ordered=True)
     df = df.astype(param_dtypes)
 
     # Save information about column names, null count, and dtypes
