@@ -17,7 +17,7 @@ feature_eng:
 imputation:
   Age: 29.6991
   Fare: 32.2042
-  method: mean
+  method: std
 model_params:
   logistic_regression: null
   naive_bayes: null

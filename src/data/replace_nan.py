@@ -7,8 +7,7 @@ import yaml
 from src.data import load_data, load_params, save_as_csv
 
 
-def main(train_path, test_path,
-         output_dir):
+def main(train_path, test_path, output_dir):
     """Split data into train, dev, and test"""
 
     output_dir = Path(output_dir).resolve()
@@ -22,22 +21,34 @@ def main(train_path, test_path,
     params = load_params()
 
     # fill nans with column mean/mode on test set
-    # TODO - switch to allow for different interpolation methods (e.g., mean, median, MICE)
+    # TODO - switch to allow for different interpolation methods (e.g., mean, std, median, MICE)
     if params["imputation"]["method"].lower() == "mean":
         mean_age = float(round(train_df["Age"].mean(), 4))
         mean_fare = float(round(train_df["Fare"].mean(), 4))
-        train_df["Age"].fillna(value=mean_age,
-                               inplace=True)
-        test_df["Age"].fillna(value=mean_age,
-                              inplace=True)
-        test_df["Fare"].fillna(value=mean_fare,
-                              inplace=True)
+
+        train_df["Age"].fillna(value=mean_age, inplace=True)
+        train_df["Fare"].fillna(value=mean_fare, inplace=True)
+
+        test_df["Age"].fillna(value=mean_age, inplace=True)
+        test_df["Fare"].fillna(value=mean_fare, inplace=True)
 
         # update params and save imputation scheme
         params["imputation"]["Age"] = mean_age
         params["imputation"]["Fare"] = mean_fare
+    elif params["imputation"]["method"].lower() == "std":
+        std_age = float(round(train_df["Age"].std(), 4))
+        std_fare = float(round(train_df["Fare"].std(), 4))
+
+        train_df["Age"].fillna(value=std_age, inplace=True)
+        train_df["Fare"].fillna(value=std_fare, inplace=True)
+
+        test_df["Age"].fillna(value=std_age, inplace=True)
+        test_df["Fare"].fillna(value=std_fare, inplace=True)
+
+        # update params and save imputation scheme
+        params["imputation"]["Age"] = std_age
+        params["imputation"]["Fare"] = std_fare
     elif params["imputation"]["method"].lower() == "mice":
-        # TODO MICE interpolation
         raise NotImplementedError
     else:
         raise NotImplementedError
