@@ -48,9 +48,21 @@ def main(train_path, test_path, output_dir):
         # update params and save imputation scheme
         params["imputation"]["Age"] = std_age
         params["imputation"]["Fare"] = std_fare
-    elif params["imputation"]["method"].lower() == "mice":
-        raise NotImplementedError
+    elif params["imputation"]["method"].lower() == "median":
+        median_age = float(round(train_df["Age"].median(), 4))
+        median_fare = float(round(train_df["Fare"].median(), 4))
+
+        train_df["Age"].fillna(value=median_age, inplace=True)
+        train_df["Fare"].fillna(value=median_fare, inplace=True)
+
+        test_df["Age"].fillna(value=median_age, inplace=True)
+        test_df["Fare"].fillna(value=median_fare, inplace=True)
+
+        # update params and save imputation scheme
+        params["imputation"]["Age"] = median_age
+        params["imputation"]["Fare"] = median_fare
     else:
+        # TODO - MICE implementation
         raise NotImplementedError
 
     # update params
